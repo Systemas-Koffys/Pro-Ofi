@@ -1,479 +1,385 @@
 import { reactive } from 'vue';
 
 export const uiState = reactive({
-  showModal: false
+  showModal: false,
+  editData: null,
+  theme: 'colors',
+  user: JSON.parse(localStorage.getItem('user')) || null,
+  loginTime: localStorage.getItem('loginTime') || null,
+  logo_app: localStorage.getItem('logo_app') || null,
+  logo_institucional: localStorage.getItem('logo_institucional') || null
 });
 
-// Estado global simple (Store) para los catálogos maestros y datos de prueba
-export const store = reactive({
-  // --- CATÁLOGOS MAESTROS (Simulando la base de datos) ---
-  tecnicos: [
-    { id: 1, nombre: 'Ing. Cimar Farfan' },
-    { id: 2, nombre: 'Ing. Karina Castro' },
-    { id: 3, nombre: 'Ing. Cesar Vega' },
-    { id: 4, nombre: 'Ing. Edwin Lopez' },
-    { id: 5, nombre: 'Ing. Jorge Candia' },
-    { id: 6, nombre: 'Ing. Pablo Bonilla' },
-    { id: 7, nombre: 'Tec. Kevin Flores' }
-  ],
-  acciones: [
-    { id: 1, nombre: 'Poda de Formación – Corte de ramas secas, elevacion de copa y despeje de pantalla' },
-    { id: 2, nombre: 'Despunte - Poda de reducción de copa, reducción controlada del tamaño del árbol para evitar riesgos' },
-    { id: 3, nombre: 'Derribe Controlado – Eliminación total del árbol por riesgo, daño estructural, arbol seco, arbol podrido y arbol inclinado' },
-    { id: 4, nombre: 'Emergencia - Arbol caido o por caer, arbol seco, arbol podrido y arbol muy inclinado' },
-    { id: 5, nombre: 'Poda de Raíces – Corte de raíces que afectan pavimentos o estructuras cercanas' },
-    { id: 6, nombre: 'Extracción de Tocón – Remoción del tronco y raíces después de la tala para evitar brotes o plagas' },
-    { id: 7, nombre: 'Poda General y otros segun criterio tecnico (levantado de copa, despeje de pantalla, despunte, derribe)' },
-    { id: 8, nombre: 'No Determinado' }
-  ],
-  especies: [
-    { id: 1, nombre: 'Acacia (Aromo)' },
-    { id: 2, nombre: 'Alcornoque (Quercus suber l.)' },
-    { id: 3, nombre: 'Algarrobo (Prosopis spp.)' },
-    { id: 4, nombre: 'Arce (Acer spp.)' },
-    { id: 5, nombre: 'Carnaval (Cassia carnaval)' },
-    { id: 6, nombre: 'Casuarina (Casuarina equisetifolia)' },
-    { id: 7, nombre: 'Ceibo (Erythrina crista-galli)' },
-    { id: 8, nombre: 'Chañar (Geoffroea decorticans)' },
-    { id: 9, nombre: 'Churqui (Acacia (Aromo) caven)' },
-    { id: 10, nombre: 'Ciprés (Cupressus spp.)' },
-    { id: 11, nombre: 'Ciruelo (Prunus domestica)' },
-    { id: 12, nombre: 'Cucarda (hibiscus rosa-sinensis)' },
-    { id: 13, nombre: 'Crespón (lagerstroemia indica)' },
-    { id: 14, nombre: 'Eucalipto (eucalyptus spp.)' },
-    { id: 15, nombre: 'Fresno (fraxinus spp.)' },
-    { id: 16, nombre: 'Grevillea (grevillea robusta)' },
-    { id: 17, nombre: 'Guaranguay (schinopsis balansae)' },
-    { id: 18, nombre: 'Jarca (Vachellia aroma)' },
-    { id: 19, nombre: 'Lapacho blanco (handroanthus serratifolius)' },
-    { id: 20, nombre: 'Lapacho rosado (handroanthus impetiginosus)' },
-    { id: 21, nombre: 'Lapacho amarillo (handroanthus albus)' },
-    { id: 22, nombre: 'Lapacho morado (handroanthus heptaphyllus)' },
-    { id: 23, nombre: 'Lapacho negro (handroanthus chrysanthus)' },
-    { id: 24, nombre: 'Laurel (ocotea spp.)' },
-    { id: 25, nombre: 'Lecherón (euphorbia cotinifolia)' },
-    { id: 26, nombre: 'Leucacia (leucaena leucocephala)' },
-    { id: 27, nombre: 'Ligustre (ligustrum lucidum)' },
-    { id: 28, nombre: 'Limonero (citrus limon)' },
-    { id: 29, nombre: 'Mora (Morus nigra)' },
-    { id: 30, nombre: 'Mara (Swietenia macrophylla King)' },
-    { id: 31, nombre: 'Molle (schinus molle)' },
-    { id: 32, nombre: 'Naranjo (citrus sinensis)' },
-    { id: 33, nombre: 'Níspero (eriobotrya japonica)' },
-    { id: 34, nombre: 'Nogal (juglans spp.)' },
-    { id: 35, nombre: 'Olmo (ulmus spp.)' },
-    { id: 36, nombre: 'Palmera (arecaceae spp.)' },
-    { id: 37, nombre: 'Motacú (attalea phalerata)' },
-    { id: 38, nombre: 'Janchicha (parajubaea sunkha)' },
-    { id: 39, nombre: 'Acai boliviano (euterpe precatoria)' },
-    { id: 40, nombre: 'Palma real (syagrus romanzoffiana)' },
-    { id: 41, nombre: 'Pachiuva (socratea exorrhiza)' },
-    { id: 42, nombre: 'Paraíso (melia azedarach)' },
-    { id: 43, nombre: 'Pino (pinus spp.)' },
-    { id: 44, nombre: 'Sauce (salix spp.)' },
-    { id: 45, nombre: 'Senasina (senna spectabilis)' },
-    { id: 46, nombre: 'Taco (erythrina spp.)' },
-    { id: 47, nombre: 'Tarco (jacaranda mimosifolia)' },
-    { id: 48, nombre: 'Timboy (enterolobium contortisiliquum)' },
-    { id: 49, nombre: 'Toborochi (ceiba speciosa)' },
-    { id: 50, nombre: 'Mara (swietenia macrophylla)' },
-    { id: 51, nombre: 'Bolaina (guazuma crinita)' },
-    { id: 52, nombre: 'Camajuu (terminalia oblonga)' },
-    { id: 53, nombre: 'Cuyoja (anadenanthera colubrina)' },
-    { id: 54, nombre: 'Soto (schinopsis haenkeana)' },
-    { id: 55, nombre: 'Aliso (alnus acuminata)' },
-    { id: 56, nombre: 'Palo santo (bursera graveolens)' },
-    { id: 57, nombre: 'Urundéy (astronium urundeuva)' },
-    { id: 58, nombre: 'Molle chileno (Schinus molle)' },
-    { id: 59, nombre: 'Rosa laurel (Nerium oleander)' },
-    { id: 60, nombre: 'Pata de vaca (Bauhinia forficata)' },
-    { id: 61, nombre: 'Brachichito (Brachychiton populneus)' },
-    { id: 62, nombre: 'Higuera (Ficus carica)' },
-    { id: 63, nombre: 'Rum Rum (Virapita Rum rum)' },
-    { id: 64, nombre: 'Tipa (Tipuana tipu)' },
-    { id: 65, nombre: 'No Determinado' }
-  ],
-  tipos_institucion: [
-    { id: 1, nombre: 'Área Rural' },
-    { id: 2, nombre: 'Salud y Hospitales' },
-    { id: 3, nombre: 'Educación' },
-    { id: 4, nombre: 'Organización Social' },
-    { id: 5, nombre: 'Entidad Municipal' },
-    { id: 6, nombre: 'Institución u Organización' }
-  ],
-  instituciones: [
-    { id: 1, nombre: 'BELLA VISTA', id_tipo: 1 },
-    { id: 2, nombre: 'CHURQUIS', id_distrito: 1 },
-    { id: 3, nombre: 'GUERRAHUAYCO', id_tipo: 1 },
-    { id: 4, nombre: 'LA PINTADA', id_tipo: 1 },
-    { id: 5, nombre: 'LAZARETO', id_tipo: 1 },
-    { id: 6, nombre: 'MONTE CERCADO', id_tipo: 1 },
-    { id: 7, nombre: 'PAMPA REDONDA', id_tipo: 1 },
-    { id: 8, nombre: 'POLLA', id_tipo: 1 },
-    { id: 9, nombre: 'SAN AGUSTIN', id_tipo: 1 },
-    { id: 10, nombre: 'SAN JACINTO', id_tipo: 1 },
-    { id: 11, nombre: 'SAN MATEO', id_tipo: 1 },
-    { id: 12, nombre: 'SAN PEDRO DE SOLA', id_tipo: 1 },
-    { id: 13, nombre: 'SANTA ANA LA NUEVA', id_tipo: 1 },
-    { id: 14, nombre: 'SELLA CERCADO', id_tipo: 1 },
-    { id: 15, nombre: 'TOLOMOSA GRANDE', id_tipo: 1 },
-    { id: 16, nombre: 'TOLOMOSITA', id_tipo: 1 },
-    { id: 17, nombre: 'TURUMAYO', id_tipo: 1 },
-    { id: 18, nombre: 'YESERA', id_tipo: 1 },
-    { id: 19, nombre: 'C.S. 15 DE NOVIEMBRE', id_tipo: 2 },
-    { id: 20, nombre: 'C.S. 3 DE MAYO', id_tipo: 2 },
-    { id: 21, nombre: 'C.S. ARANJUEZ SUD', id_tipo: 2 },
-    { id: 22, nombre: 'C.S. CONSTRUCTOR', id_tipo: 2 },
-    { id: 23, nombre: 'C.S. FABRIL', id_tipo: 2 },
-    { id: 24, nombre: 'C.S. GERMAN BUSCH', id_tipo: 2 },
-    { id: 25, nombre: 'C.S. GUADALQUIVIR', id_tipo: 2 },
-    { id: 26, nombre: 'C.S. IV. CENTENARIO', id_tipo: 2 },
-    { id: 27, nombre: 'C.S. NESTOR PAZ', id_tipo: 2 },
-    { id: 28, nombre: 'C.S. PALMARCITO', id_tipo: 2 },
-    { id: 29, nombre: 'C.S. SAN ANTONIO', id_tipo: 2 },
-    { id: 30, nombre: 'C.S. SAN BLAS', id_tipo: 2 },
-    { id: 31, nombre: 'C.S. SAN JORGE', id_tipo: 2 },
-    { id: 32, nombre: 'C.S. SAN LUIS', id_tipo: 2 },
-    { id: 33, nombre: 'C.S. TABLADITA', id_tipo: 2 },
-    { id: 34, nombre: 'C.S. VILLA AVAROA', id_tipo: 2 },
-    { id: 35, nombre: 'C.S. VIRGEN DE GUADALUPE', id_tipo: 2 },
-    { id: 36, nombre: 'Hospital Obrero C.N.S', id_tipo: 2 },
-    { id: 37, nombre: 'SEDES', id_tipo: 2 },
-    { id: 38, nombre: 'Prosalud', id_tipo: 2 },
-    { id: 39, nombre: 'U.E. ALBERTO BALDIVIESO', id_tipo: 3 },
-    { id: 40, nombre: 'U.E. AVELINA RAÑA', id_tipo: 3 },
-    { id: 41, nombre: 'U.E. JOSE MANUEL BELGRANO', id_tipo: 3 },
-    { id: 42, nombre: 'U.E. BOLIVIA', id_tipo: 3 },
-    { id: 43, nombre: 'U.E. CARMEN MEALLA', id_tipo: 3 },
-    { id: 44, nombre: 'U.E. COLEGIO NACIONAL SAN LUIS', id_tipo: 3 },
-    { id: 45, nombre: 'U.E. FELIPE PALAZON', id_tipo: 3 },
-    { id: 46, nombre: 'U.E. LA SALLE', id_tipo: 3 },
-    { id: 47, nombre: 'Universidad Autónoma Juan Mishael Saracho', id_tipo: 3 },
-    { id: 48, nombre: 'Universidad Católica Boliviana', id_tipo: 3 },
-    { id: 49, nombre: 'Instituto Tecnologico Agropecuario San Andres', id_tipo: 3 },
-    { id: 50, nombre: 'Infocal', id_tipo: 3 },
-    { id: 51, nombre: 'Junta Vecinal', id_tipo: 4 },
-    { id: 52, nombre: 'Club Pumas Chapacos', id_tipo: 4 },
-    { id: 53, nombre: 'Asociacion de Promesantes Chunchos', id_tipo: 4 },
-    { id: 54, nombre: 'Asociación Conciencia Ecológica', id_tipo: 4 },
-    { id: 55, nombre: 'Sindicato De Transporte De Pasajeros La Tablada', id_tipo: 4 },
-    { id: 56, nombre: 'Federacion departamental de auto transporte 15 de abril', id_tipo: 4 },
-    { id: 57, nombre: 'Asociación de comerciantes minorista 20 de Mayo', id_tipo: 4 },
-    { id: 58, nombre: 'Despacho Municipal', id_tipo: 5 },
-    { id: 59, nombre: 'Secretaria M. de Infraestructura y Servicios', id_tipo: 5 },
-    { id: 60, nombre: 'Secretaria M. De Planificación Integral', id_tipo: 5 },
-    { id: 61, nombre: 'Consejo Municipal', id_tipo: 5 },
-    { id: 62, nombre: 'Mercado Lourdes', id_tipo: 5 },
-    { id: 63, nombre: 'Mercado Luis de Fuentes', id_tipo: 5 },
-    { id: 64, nombre: 'Dirección de ingreso - oficina de parqueos', id_tipo: 5 },
-    { id: 65, nombre: 'Tercera Division del Ejercito TCNL PADILLA', id_tipo: 6 },
-    { id: 66, nombre: 'Policía Bolivia FELCC', id_tipo: 6 },
-    { id: 67, nombre: 'SETAR', id_tipo: 6 },
-    { id: 68, nombre: 'Cosaalt', id_tipo: 6 },
-    { id: 69, nombre: 'Servicio Eléctrico Industrial EMSEIQQ', id_tipo: 6 },
-    { id: 70, nombre: 'Camara departamental de transporte', id_tipo: 6 }
-  ],
-  distritos: [
-    { id: 1, nombre: 'Distrito 1' },
-    { id: 2, nombre: 'Distrito 2' },
-    { id: 3, nombre: 'Distrito 3' },
-    { id: 4, nombre: 'Distrito 4' },
-    { id: 5, nombre: 'Distrito 5' },
-    { id: 6, nombre: 'Distrito 6' },
-    { id: 7, nombre: 'Distrito 7' },
-    { id: 8, nombre: 'Distrito 8' },
-    { id: 9, nombre: 'Distrito 9' },
-    { id: 10, nombre: 'Distrito 10' },
-    { id: 11, nombre: 'Distrito 11' },
-    { id: 12, nombre: 'Distrito 12' },
-    { id: 13, nombre: 'Distrito 13' }
-  ],
-  barrios: [
-    { id: 1, nombre: 'EL MOLINO', id_distrito: 1 },
-    { id: 2, nombre: 'SAN ROQUE', id_distrito: 2 },
-    { id: 3, nombre: 'LAS PANOSAS', id_distrito: 3 },
-    { id: 4, nombre: 'LA PAMPA', id_distrito: 4 },
-    { id: 5, nombre: 'VIRGEN DE FATIMA', id_distrito: 5 },
-    { id: 6, nombre: 'LA LOMA', id_distrito: 6 },
-    { id: 7, nombre: 'EL CARMEN', id_distrito: 6 },
-    { id: 8, nombre: 'GUADALQUIVIR', id_distrito: 6 },
-    { id: 9, nombre: '57 VIVIENDAS', id_distrito: 6 },
-    { id: 10, nombre: 'LUIS PIZARRO', id_distrito: 6 },
-    { id: 11, nombre: '15 DE NOVIEMBRE', id_distrito: 6 },
-    { id: 12, nombre: 'JUAN PABLO II', id_distrito: 6 },
-    { id: 13, nombre: 'VIRGEN DE CHAGUAYA', id_distrito: 6 },
-    { id: 14, nombre: 'LIBERTAD', id_distrito: 6 },
-    { id: 15, nombre: 'PANAMERICANO', id_distrito: 6 },
-    { id: 16, nombre: '15 DE AGOSTO', id_distrito: 6 },
-    { id: 17, nombre: 'LA TORRE', id_distrito: 6 },
-    { id: 18, nombre: 'LA UNION', id_distrito: 6 },
-    { id: 19, nombre: 'CARLOS WAGNNER', id_distrito: 6 },
-    { id: 20, nombre: 'PARAISO', id_distrito: 6 },
-    { id: 21, nombre: 'LOS ALAMOS', id_distrito: 6 },
-    { id: 22, nombre: 'LOS OLIVOS', id_distrito: 6 },
-    { id: 23, nombre: '4 DE JULIO', id_distrito: 7 },
-    { id: 24, nombre: '12 DE OCTUBRE', id_distrito: 7 },
-    { id: 25, nombre: 'IV CENTENARIO', id_distrito: 7 },
-    { id: 26, nombre: 'DEFENSORES DEL CHACO', id_distrito: 7 },
-    { id: 27, nombre: 'LAS PASCUAS', id_distrito: 7 },
-    { id: 28, nombre: '3 DE MAYO', id_distrito: 7 },
-    { id: 29, nombre: 'LOS CHAPACOS', id_distrito: 7 },
-    { id: 30, nombre: 'MARIA DE LOS ANGELES', id_distrito: 7 },
-    { id: 31, nombre: '15 DE JUNIO', id_distrito: 7 },
-    { id: 32, nombre: 'MUNICIPAL', id_distrito: 7 },
-    { id: 33, nombre: '19 DE MARZO', id_distrito: 7 },
-    { id: 34, nombre: '20 DE ENERO', id_distrito: 7 },
-    { id: 35, nombre: '101 FAMILIAS', id_distrito: 7 },
-    { id: 36, nombre: 'NUEVA ESPERANZA', id_distrito: 7 },
-    { id: 37, nombre: 'EDUARDO AVAROA', id_distrito: 8 },
-    { id: 38, nombre: 'OSCAR ALFARO', id_distrito: 8 },
-    { id: 39, nombre: 'SAN JOSE', id_distrito: 8 },
-    { id: 40, nombre: 'SAN MARCOS', id_distrito: 8 },
-    { id: 41, nombre: 'LOURDES', id_distrito: 8 },
-    { id: 42, nombre: 'LA FLORIDA', id_distrito: 8 },
-    { id: 43, nombre: 'PASCUAS', id_distrito: 8 },
-    { id: 44, nombre: 'LOS LAURELES', id_distrito: 8 },
-    { id: 45, nombre: 'LA HUERTA', id_distrito: 8 },
-    { id: 46, nombre: '6 DE AGOSTO', id_distrito: 9 },
-    { id: 47, nombre: 'SALAMANCA', id_distrito: 9 },
-    { id: 48, nombre: 'SAN BERNARDO', id_distrito: 9 },
-    { id: 49, nombre: 'ANDALUZ', id_distrito: 9 },
-    { id: 50, nombre: '02 DE MAYO', id_distrito: 9 },
-    { id: 51, nombre: 'PEDRO ANTONIO FLORES', id_distrito: 9 },
-    { id: 52, nombre: 'CONSTRUCTOR', id_distrito: 9 },
-    { id: 53, nombre: '24 DE JUNIO', id_distrito: 9 },
-    { id: 54, nombre: 'ANICETO ARCE', id_distrito: 9 },
-    { id: 55, nombre: 'NARCISO CAMPERO', id_distrito: 9 },
-    { id: 56, nombre: 'LUIS ESPINAL', id_distrito: 9 },
-    { id: 57, nombre: '7 DE SEPTIMBRE', id_distrito: 9 },
-    { id: 58, nombre: 'BARTOLOME ATARD', id_distrito: 9 },
-    { id: 59, nombre: 'MOTO MENDEZ', id_distrito: 9 },
-    { id: 60, nombre: 'JUAN XXIII', id_distrito: 10 },
-    { id: 61, nombre: 'ROSEDAL', id_distrito: 10 },
-    { id: 62, nombre: 'JUAN NICOLAY', id_distrito: 10 },
-    { id: 63, nombre: '15 DE ABRIL', id_distrito: 10 },
-    { id: 64, nombre: 'AEROPUERTO', id_distrito: 10 },
-    { id: 65, nombre: 'MORROS BLANCOS', id_distrito: 10 },
-    { id: 66, nombre: 'SAN PEDRO', id_distrito: 10 },
-    { id: 67, nombre: 'SAN JORGE 1', id_distrito: 10 },
-    { id: 68, nombre: 'SAN SALVADOR', id_distrito: 10 },
-    { id: 69, nombre: 'SAN JORGE 2', id_distrito: 10 },
-    { id: 70, nombre: 'ARTESANAL', id_distrito: 10 },
-    { id: 71, nombre: 'LINDO SAN GERONIMO', id_distrito: 11 },
-    { id: 72, nombre: 'SAN GERONIMO CENTRO', id_distrito: 11 },
-    { id: 73, nombre: 'SAN GERONIMO SUD', id_distrito: 11 },
-    { id: 74, nombre: 'SAN LUIS', id_distrito: 11 },
-    { id: 75, nombre: 'LA TERMINAL', id_distrito: 11 },
-    { id: 76, nombre: 'PETROLERO', id_distrito: 11 },
-    { id: 77, nombre: 'EL TEJAR', id_distrito: 11 },
-    { id: 78, nombre: 'MIRAFLORES', id_distrito: 12 },
-    { id: 79, nombre: 'GERMAN BUSCH', id_distrito: 12 },
-    { id: 80, nombre: 'ARANJUEZ SUD', id_distrito: 12 },
-    { id: 81, nombre: 'SAN MARTIN', id_distrito: 12 },
-    { id: 82, nombre: 'LUIS DE FUENTES', id_distrito: 13 },
-    { id: 83, nombre: 'CATEDRAL', id_distrito: 13 },
-    { id: 84, nombre: 'SAN ANTONIO', id_distrito: 13 },
-    { id: 85, nombre: 'SAN BLAS', id_distrito: 13 },
-    { id: 86, nombre: 'ALTO SENAC', id_distrito: 13 },
-    { id: 87, nombre: 'SENAC', id_distrito: 13 },
-    { id: 88, nombre: 'TABLADITA I', id_distrito: 13 },
-    { id: 89, nombre: 'TABLADITA II', id_distrito: 13 },
-    { id: 90, nombre: 'MENDEZ ARCOS', id_distrito: 13 }
-  ],
+// --- Sistema de Notificaciones (Toast) ---
+export const toast = reactive({
+  visible: false,
+  message: '',
+  type: 'success'   // 'success' | 'error'
+});
 
-  // --- TABLA PRINCIPAL (Solicitudes) ---
-  solicitudes: [
-    {
-      id_solicitud: 1,
-      fecha_ingreso: '2024-05-01',
-      fecha_verificacion: '2024-05-03',
-      comunicacion_interna: 'Cod 0001/24',
-      id_barrio: 1, // EL MOLINO
-      id_nombre_institucional: null,
-      id_accion: 1, // Poda de Formación
-      id_especie: 31, // Molle
-      calle: 'Av. Las Américas',
-      numero_casa: 'S/N',
-      referencia: 'Frente al parque',
-      solicitante_nombre: 'Juan Pérez',
-      solicitante_telefono: '76543210',
-      lo_solicitado: 'Árbol choca con cables, peligro para vecinos.',
-      id_accion_solicitada: 1,
-      id_tecnico_verificacion: 1, // Ing. Cimar Farfan
-      requiere_plataforma: true,
-      requiere_setar: true,
-      requiere_ficha_tecnica: false,
-      procede: true,
-      cantidad_notas: 1,
-      arbol_seco: false,
-      es_emergencia: false,
-      nivel_urgencia: 'Intermedia',
-      observacion_verificacion: 'Requiere grúa por la altura',
-      id_tecnico_ejecucion: 7, // Tec. Kevin Flores
-      fecha_ejecucion: null,
-      observaciones_finales: '',
-      estado_tramite: 'En espera'
-    },
-    {
-      id_solicitud: 2,
-      fecha_ingreso: '2024-05-02',
-      fecha_verificacion: '2024-05-04',
-      comunicacion_interna: 'Cod 0002/24',
-      id_barrio: 10, // LUIS PIZARRO
-      id_nombre_institucional: 39, // U.E. ALBERTO BALDIVIESO
-      id_accion: 3, // Derribe Controlado
-      id_especie: 14, // Eucalipto
-      calle: 'Calle Colón',
-      numero_casa: '123',
-      referencia: 'Patio central del colegio',
-      solicitante_nombre: 'Prof. Martha Llanos',
-      solicitante_telefono: '71122334',
-      lo_solicitado: 'El árbol está seco y amenaza con caer sobre las aulas.',
-      id_accion_solicitada: 4, // Emergencia
-      id_tecnico_verificacion: 2, // Ing. Karina Castro
-      requiere_plataforma: false,
-      requiere_setar: false,
-      requiere_ficha_tecnica: true,
-      procede: true,
-      cantidad_notas: 1,
-      arbol_seco: true,
-      es_emergencia: true,
-      nivel_urgencia: 'Alta',
-      observacion_verificacion: 'Árbol muerto en pie, riesgo inminente',
-      id_tecnico_ejecucion: null,
-      fecha_ejecucion: null,
-      observaciones_finales: '',
-      estado_tramite: 'En espera'
-    },
-    {
-      id_solicitud: 3,
-      fecha_ingreso: '2024-05-03',
-      fecha_verificacion: '2024-05-05',
-      comunicacion_interna: 'Cod 0003/24',
-      id_barrio: 23, // 4 DE JULIO
-      id_nombre_institucional: 19, // C.S. 15 DE NOVIEMBRE
-      id_accion: 5, // Poda de Raíces
-      id_especie: 43, // Pino
-      calle: 'Calle Sucre',
-      numero_casa: 'S/N',
-      referencia: 'Acera principal del centro',
-      solicitante_nombre: 'Dr. Roberto Méndez',
-      solicitante_telefono: '66453322',
-      lo_solicitado: 'Raíces levantando acera impiden paso de sillas de ruedas.',
-      id_accion_solicitada: 5,
-      id_tecnico_verificacion: 3, // Ing. Cesar Vega
-      requiere_plataforma: false,
-      requiere_setar: false,
-      requiere_ficha_tecnica: false,
-      procede: true,
-      cantidad_notas: 2,
-      arbol_seco: false,
-      es_emergencia: false,
-      nivel_urgencia: 'Intermedia',
-      observacion_verificacion: 'Corte superficial de raíces no afecta estabilidad',
-      id_tecnico_ejecucion: 7, // Tec. Kevin Flores
-      fecha_ejecucion: '2024-05-06',
-      observaciones_finales: 'Se cortaron 3 raíces expuestas.',
-      estado_tramite: 'Terminado'
-    },
-    {
-      id_solicitud: 4,
-      fecha_ingreso: '2024-05-04',
-      fecha_verificacion: null,
-      comunicacion_interna: 'Cod 0004/24',
-      id_barrio: 47, // SALAMANCA
-      id_nombre_institucional: null,
-      id_accion: null,
-      id_especie: null,
-      calle: 'Av. Panamericana',
-      numero_casa: '88',
-      referencia: 'Al lado de la panadería',
-      solicitante_nombre: 'María López',
-      solicitante_telefono: '70221144',
-      lo_solicitado: 'Poda para que el árbol crezca más bonito',
-      id_accion_solicitada: 1, // Poda de Formación
-      id_tecnico_verificacion: null,
-      requiere_plataforma: false,
-      requiere_setar: false,
-      requiere_ficha_tecnica: false,
-      procede: false,
-      cantidad_notas: 1,
-      arbol_seco: false,
-      es_emergencia: false,
-      nivel_urgencia: 'Baja',
-      observacion_verificacion: '',
-      id_tecnico_ejecucion: null,
-      fecha_ejecucion: null,
-      observaciones_finales: '',
-      estado_tramite: 'En espera'
-    },
-    {
-      id_solicitud: 5,
-      fecha_ingreso: '2024-05-05',
-      fecha_verificacion: '2024-05-05',
-      comunicacion_interna: 'Cod 0005/24',
-      id_barrio: 82, // LUIS DE FUENTES
-      id_nombre_institucional: null,
-      id_accion: 6, // Extracción de Tocón
-      id_especie: 20, // Lapacho rosado
-      calle: 'Calle Cochabamba',
-      numero_casa: '23',
-      referencia: 'En media plaza',
-      solicitante_nombre: 'Asociación de Vecinos',
-      solicitante_telefono: '66332211',
-      lo_solicitado: 'Sacar el tronco del árbol que talaron el año pasado.',
-      id_accion_solicitada: 6,
-      id_tecnico_verificacion: 5, // Ing. Jorge Candia
-      requiere_plataforma: false,
-      requiere_setar: false,
-      requiere_ficha_tecnica: false,
-      procede: true,
-      cantidad_notas: 1,
-      arbol_seco: true,
-      es_emergencia: false,
-      nivel_urgencia: 'Baja',
-      observacion_verificacion: 'Se necesita maquinaria pesada (retroexcavadora)',
-      id_tecnico_ejecucion: null,
-      fecha_ejecucion: null,
-      observaciones_finales: '',
-      estado_tramite: 'En espera'
-    },
-    {
-      id_solicitud: 6,
-      fecha_ingreso: '2024-05-06',
-      fecha_verificacion: '2024-05-06',
-      comunicacion_interna: 'Cod 0006/24',
-      id_barrio: 66, // SAN PEDRO
-      id_nombre_institucional: 66, // Policía Bolivia FELCC
-      id_accion: 2, // Despunte
-      id_especie: 42, // Paraíso
-      calle: 'Av. Integración',
-      numero_casa: 'S/N',
-      referencia: 'Oficinas principales',
-      solicitante_nombre: 'Comandante Pérez',
-      solicitante_telefono: '77665544',
-      lo_solicitado: 'Ramas tapan las cámaras de seguridad.',
-      id_accion_solicitada: 2,
-      id_tecnico_verificacion: 6, // Ing. Pablo Bonilla
-      requiere_plataforma: true,
-      requiere_setar: false,
-      requiere_ficha_tecnica: false,
-      procede: true,
-      cantidad_notas: 3,
-      arbol_seco: false,
-      es_emergencia: false,
-      nivel_urgencia: 'Intermedia',
-      observacion_verificacion: 'Poda rápida, pero sí se usa canasta.',
-      id_tecnico_ejecucion: 7,
-      fecha_ejecucion: '2024-05-07',
-      observaciones_finales: 'Se despejó la visual de 3 cámaras de seguridad.',
-      estado_tramite: 'Terminado'
+let _toastTimer = null;
+export function showToast(message, type = 'success', durationMs = 3500) {
+  if (_toastTimer) clearTimeout(_toastTimer);
+  toast.message = message;
+  toast.type = type;
+  toast.visible = true;
+  _toastTimer = setTimeout(() => { toast.visible = false; }, durationMs);
+}
+
+// --- Sistema de Autenticación ---
+export async function login(username, password) {
+  try {
+    const response = await fetch(`${API_URL}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await response.json();
+    if (data.success) {
+      uiState.user = data.user;
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      uiState.loginTime = now;
+      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('loginTime', now);
+      localStorage.setItem('loginTimeFull', new Date().toISOString());
+      return true;
     }
-  ]
+    return false;
+  } catch (error) {
+    console.error('Error en login:', error);
+    return false;
+  }
+}
+
+export function logout() {
+  uiState.user = null;
+  uiState.loginTime = null;
+  localStorage.removeItem('user');
+  localStorage.removeItem('loginTime');
+}
+
+// -----------------------------------------
+
+// Estado global para los catálogos y solicitudes
+export const store = reactive({
+  tecnicos: [],
+  acciones: [],
+  especies: [],
+  tipos_institucion: [],
+  instituciones: [],
+  distritos: [],
+  barrios: [],
+  solicitudes: [],
+  usuarios: [],
+  impresiones: [],
+  config: {}
 });
 
-// Función auxiliar para agregar una solicitud
-export function addSolicitud(solicitud) {
-  solicitud.id_solicitud = store.solicitudes.length + 1;
-  store.solicitudes.push(solicitud);
+// URL del backend (ahora manejada por el proxy de Vite en el puerto 5173)
+const API_URL = '/api';
+
+
+// Función para descargar los catálogos de MySQL
+export async function fetchCatalogos() {
+  try {
+    const response = await fetch(`${API_URL}/catalogos`);
+    const data = await response.json();
+    
+    // Poblar el store
+    store.tecnicos = data.tecnicos || [];
+    store.acciones = data.acciones || [];
+    store.especies = data.especies || [];
+    store.tipos_institucion = data.tipos_institucion || [];
+    store.instituciones = data.instituciones || [];
+    store.distritos = data.distritos || [];
+    store.barrios = data.barrios || [];
+    
+    // También descargamos usuarios, impresiones y configuración
+    try { await fetchUsuarios(); } catch(e) { console.error(e); }
+    try { await fetchImpresiones(); } catch(e) { console.error(e); }
+    try { await fetchConfig(); } catch(e) { console.error(e); }
+    
+    console.log("Catálogos cargados desde MySQL con éxito.");
+  } catch (error) {
+    console.error("Error al cargar los catálogos:", error);
+  }
+}
+
+// --- CONFIGURACIÓN DEL SISTEMA ---
+export async function fetchConfig() {
+  try {
+    const response = await fetch(`${API_URL}/config`);
+    store.config = await response.json();
+  } catch (error) {
+    console.error("Error al cargar configuración:", error);
+  }
+}
+
+export async function updateConfig(datos) {
+  try {
+    const response = await fetch(`${API_URL}/config`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    });
+    if (response.ok) {
+      await fetchConfig();
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error("Error al actualizar configuración:", error);
+    return false;
+  }
+}
+
+// Función para descargar historial de impresiones
+export async function fetchImpresiones() {
+  try {
+    const response = await fetch(`${API_URL}/impresiones`);
+    store.impresiones = await response.json();
+  } catch (error) {
+    console.error("Error al cargar impresiones:", error);
+  }
+}
+
+// Función para registrar una impresión
+export async function registrarImpresion(id_solicitud, tipo_reporte, detalles = null) {
+  try {
+    const response = await fetch(`${API_URL}/impresiones`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id_solicitud,
+        tipo_reporte,
+        usuario: uiState.user?.nombre || 'Desconocido',
+        detalles
+      })
+    });
+    if (response.ok) {
+      await fetchImpresiones();
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error("Error al registrar impresión:", error);
+    return false;
+  }
+}
+
+// Función para descargar los usuarios públicos (para el login)
+export async function fetchPublicUsuarios() {
+  try {
+    const response = await fetch(`${API_URL}/usuarios/publico`);
+
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error al cargar usuarios públicos:", error);
+    return [];
+  }
+}
+
+// Función para descargar los usuarios de MySQL
+export async function fetchUsuarios() {
+
+  try {
+    const response = await fetch(`${API_URL}/usuarios`);
+    store.usuarios = await response.json();
+    console.log("Usuarios cargados desde MySQL con éxito.");
+  } catch (error) {
+    console.error("Error al cargar los usuarios:", error);
+  }
+}
+
+// Función para guardar un nuevo usuario
+export async function addUsuario(usuario) {
+  try {
+    const response = await fetch(`${API_URL}/usuarios`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'X-User-Role': uiState.user?.role
+      },
+      body: JSON.stringify(usuario)
+    });
+    if (response.ok) {
+      await fetchUsuarios();
+      return true;
+    }
+    const err = await response.json();
+    return err.error || 'Error en el servidor';
+  } catch (error) {
+    console.error('Error al agregar usuario:', error);
+    return false;
+  }
+}
+
+// Función para eliminar un usuario
+export async function deleteUsuario(id) {
+  try {
+    const response = await fetch(`${API_URL}/usuarios/${id}`, {
+      method: 'DELETE',
+      headers: { 'X-User-Role': uiState.user?.role }
+    });
+    if (response.ok) {
+      store.usuarios = store.usuarios.filter(u => u.id != id);
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('Error al eliminar usuario:', error);
+    return false;
+  }
+}
+
+// Función para actualizar un usuario
+export async function updateUsuario(id, usuario) {
+  try {
+    const response = await fetch(`${API_URL}/usuarios/${id}`, {
+      method: 'PUT',
+      headers: { 
+        'Content-Type': 'application/json',
+        'X-User-Role': uiState.user?.role
+      },
+      body: JSON.stringify(usuario)
+    });
+    if (response.ok) {
+      await fetchUsuarios();
+      return true;
+    }
+    const err = await response.json();
+    return err.error || 'Error en el servidor';
+  } catch (error) {
+    console.error('Error al actualizar usuario:', error);
+    return false;
+  }
+}
+
+// Función para descargar las solicitudes de MySQL
+export async function fetchSolicitudes() {
+  try {
+    const response = await fetch(`${API_URL}/solicitudes`);
+    store.solicitudes = await response.json();
+    console.log("Solicitudes cargadas desde MySQL con éxito.");
+  } catch (error) {
+    console.error("Error al cargar las solicitudes:", error);
+  }
+}
+
+// Función para guardar una nueva solicitud en MySQL
+export async function addSolicitud(solicitud) {
+  try {
+    const response = await fetch(`${API_URL}/solicitudes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(solicitud)
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok) {
+      // Le agregamos el ID que nos devolvió MySQL y la metemos al store local para actualizar la tabla visual
+      solicitud.id_solicitud = data.id_solicitud;
+      store.solicitudes.push(solicitud);
+      return true;
+    } else {
+      console.error("Error del servidor:", data.error);
+      return false;
+    }
+  } catch (error) {
+    console.error("Error de red al guardar la solicitud:", error);
+    return false;
+  }
+}
+
+// Función para ELIMINAR una solicitud de MySQL
+export async function deleteSolicitud(id) {
+  try {
+    const response = await fetch(`${API_URL}/solicitudes/${id}`, {
+      method: 'DELETE'
+    });
+    if (response.ok) {
+      store.solicitudes = store.solicitudes.filter(s => s.id_solicitud != id);
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('Error al eliminar:', error);
+    return false;
+  }
+}
+
+// Función para ACTUALIZAR una solicitud en MySQL
+export async function updateSolicitud(id, datos) {
+  try {
+    const response = await fetch(`${API_URL}/solicitudes/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    });
+    if (response.ok) {
+      const idx = store.solicitudes.findIndex(s => s.id_solicitud == id);
+      if (idx !== -1) store.solicitudes[idx] = { ...store.solicitudes[idx], ...datos, id_solicitud: id };
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('Error al actualizar:', error);
+    return false;
+  }
+}
+// --- GESTIÓN DE CATÁLOGOS (DINÁMICO) ---
+export async function addCatalogo(tabla, datos) {
+  try {
+    const response = await fetch(`${API_URL}/catalogos/${tabla}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    });
+    if (response.ok) {
+      await fetchCatalogos(); // Recargar todo para sincronizar
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error(`Error al agregar en ${tabla}:`, error);
+    return false;
+  }
+}
+
+export async function updateCatalogo(tabla, id, datos) {
+  try {
+    const response = await fetch(`${API_URL}/catalogos/${tabla}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    });
+    if (response.ok) {
+      await fetchCatalogos();
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error(`Error al actualizar en ${tabla}:`, error);
+    return false;
+  }
+}
+
+export async function deleteCatalogo(tabla, id) {
+  try {
+    const response = await fetch(`${API_URL}/catalogos/${tabla}/${id}`, {
+      method: 'DELETE'
+    });
+    if (response.ok) {
+      await fetchCatalogos();
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error(`Error al eliminar de ${tabla}:`, error);
+    return false;
+  }
 }

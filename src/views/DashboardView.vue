@@ -1,177 +1,145 @@
 <template>
-<div>
-    <div id="dashboard">
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div class="stat-card card p-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-white/80 text-sm font-medium mb-2">
-                            Total Solicitudes
-                        </p>
-                        <p class="text-4xl font-bold">{{ stats.total }}</p>
-                        <p class="text-white/70 text-xs mt-2">Registradas en el sistema</p>
-                    </div>
-                    <svg class="w-12 h-12 opacity-20" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6-4a2 2 0 100-4 2 2 0 000 4z">
-                        </path>
-                    </svg>
+<div class="dashboard p-2">
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="stat-card card p-6 border-l-4 border-l-accent">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-muted text-xs font-black uppercase tracking-widest mb-1">Total Solicitudes</p>
+                    <p class="text-4xl font-black">{{ stats.total }}</p>
+                    <p class="text-muted text-[10px] mt-2">Registradas en el sistema</p>
                 </div>
-            </div>
-
-            <div class="stat-card alt1 card p-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-white/80 text-sm font-medium mb-2">
-                            Completadas
-                        </p>
-                        <p class="text-4xl font-bold">{{ stats.completadas }}</p>
-                        <p class="text-white/70 text-xs mt-2">
-                            {{ stats.porcentaje_completadas }}% completadas
-                        </p>
-                    </div>
-                    <svg class="w-12 h-12 opacity-20" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </div>
-            </div>
-
-            <div class="stat-card alt2 card p-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-white/80 text-sm font-medium mb-2">
-                            En Proceso / Espera
-                        </p>
-                        <p class="text-4xl font-bold">{{ stats.enProceso }}</p>
-                        <p class="text-white/70 text-xs mt-2">
-                            Trámites activos
-                        </p>
-                    </div>
-                    <svg class="w-12 h-12 opacity-20" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.947.34A5.002 5.002 0 005.09 5.1A1 1 0 014 4.1V3a1 1 0 011-1zm.008 9a1 1 0 011.992 0 5 5 0 1019 0 1 1 0 11-2 0 3 3 0 10-6 0 1 1 0 01-1-1zm9-6a1 1 0 100-2 1 1 0 000 2z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </div>
-            </div>
-
-            <div class="stat-card alt3 card p-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-white/80 text-sm font-medium mb-2">
-                            Emergencia / Urgentes
-                        </p>
-                        <p class="text-4xl font-bold">{{ stats.urgentes }}</p>
-                        <p class="text-white/70 text-xs mt-2">
-                            Requieren atención rápida
-                        </p>
-                    </div>
-                    <svg class="w-12 h-12 opacity-20" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                            clip-rule="evenodd"></path>
-                    </svg>
+                <div class="p-3 bg-accent/10 rounded-2xl text-accent">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                 </div>
             </div>
         </div>
 
-        <!-- Filters -->
-        <div class="mb-6 flex flex-wrap gap-4 items-center">
-            <div class="flex-1 min-w-[200px]">
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Filtrar por Período</label>
-                <select class="search-input w-full border rounded p-2">
-                    <option>Últimos 30 días</option>
-                    <option>Últimos 3 meses</option>
-                    <option>Este año</option>
-                    <option>Todo el tiempo</option>
-                </select>
-            </div>
-            <div class="flex-1 min-w-[200px]">
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Filtrar por Estado</label>
-                <select class="search-input w-full border rounded p-2">
-                    <option value="">Todos los estados</option>
-                    <option value="En espera">En espera</option>
-                    <option value="Terminado">Terminado</option>
-                </select>
-            </div>
-            <div class="flex-1 min-w-[200px]">
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Filtrar por Distrito</label>
-                <select class="search-input w-full border rounded p-2">
-                    <option value="">Todos los distritos</option>
-                    <option v-for="d in store.distritos" :key="d.id" :value="d.id">{{ d.nombre }}</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Charts -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <div class="chart-container card p-6">
-                <h3 class="font-bold text-lg text-gray-800 mb-4 border-b pb-2">
-                    Solicitudes por Distrito
-                </h3>
-                <div style="position: relative; height:300px; width:100%; display: flex; justify-content: center;">
-                    <canvas id="chartPie"></canvas>
+        <div class="stat-card card p-6 border-l-4 border-l-green-500">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-muted text-xs font-black uppercase tracking-widest mb-1">Completadas</p>
+                    <p class="text-4xl font-black">{{ stats.completadas }}</p>
+                    <p class="text-muted text-[10px] mt-2">{{ stats.porcentaje_completadas }}% del total</p>
                 </div>
-            </div>
-
-            <div class="chart-container card p-6">
-                <h3 class="font-bold text-lg text-gray-800 mb-4 border-b pb-2">
-                    Solicitudes por Acción Solicitada
-                </h3>
-                <div style="position: relative; height:300px; width:100%; display: flex; justify-content: center;">
-                    <canvas id="chartBar"></canvas>
+                <div class="p-3 bg-green-500/10 rounded-2xl text-green-500">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
             </div>
         </div>
 
-        <!-- Recent Solicitudes Table -->
-        <div class="card p-6 mt-8">
-            <h3 class="font-bold text-lg text-gray-800 mb-4 border-b pb-2">
-                Últimas Solicitudes Ingresadas
+        <div class="stat-card card p-6 border-l-4 border-l-yellow-500">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-muted text-xs font-black uppercase tracking-widest mb-1">En Proceso</p>
+                    <p class="text-4xl font-black">{{ stats.enProceso }}</p>
+                    <p class="text-muted text-[10px] mt-2">Trámites activos</p>
+                </div>
+                <div class="p-3 bg-yellow-500/10 rounded-2xl text-yellow-500">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card card p-6 border-l-4 border-l-red-500">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-muted text-xs font-black uppercase tracking-widest mb-1">Urgentes</p>
+                    <p class="text-4xl font-black">{{ stats.urgentes }}</p>
+                    <p class="text-muted text-[10px] mt-2">Atención inmediata</p>
+                </div>
+                <div class="p-3 bg-red-500/10 rounded-2xl text-red-500">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row 1 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div class="card p-6">
+            <h3 class="font-black text-lg mb-6 border-b border-border pb-4 uppercase tracking-tighter">
+                Distribución por Distrito
             </h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-gray-50 text-gray-700 text-sm">
-                            <th class="p-3 border-b font-semibold">Código Interno</th>
-                            <th class="p-3 border-b font-semibold">Fecha Ingreso</th>
-                            <th class="p-3 border-b font-semibold">Solicitante</th>
-                            <th class="p-3 border-b font-semibold">Ubicación</th>
-                            <th class="p-3 border-b font-semibold">Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-if="ultimasSolicitudes.length === 0">
-                            <td colspan="5" class="p-4 text-center text-gray-500">No hay solicitudes registradas aún.</td>
-                        </tr>
-                        <tr v-for="(sol, index) in ultimasSolicitudes" :key="index" class="hover:bg-gray-50 border-b last:border-0 transition-colors">
-                            <td class="p-3 text-sm font-medium text-blue-600">{{ sol.comunicacion_interna || 'Sin código' }}</td>
-                            <td class="p-3 text-sm text-gray-600">{{ sol.fecha_ingreso }}</td>
-                            <td class="p-3 text-sm font-medium">{{ sol.solicitante_nombre }}</td>
-                            <td class="p-3 text-sm text-gray-600">
-                                {{ getBarrioNombre(sol.id_barrio) }}
-                                <span v-if="sol.id_nombre_institucional" class="text-xs bg-purple-100 text-purple-800 px-2 py-0.5 rounded ml-1">
-                                    Inst
-                                </span>
-                            </td>
-                            <td class="p-3 text-sm">
-                                <span class="px-3 py-1 rounded-full text-xs font-semibold"
-                                    :class="sol.estado_tramite === 'Terminado' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'">
-                                    {{ sol.estado_tramite }}
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="relative h-[300px] flex justify-center">
+                <canvas id="chartPie"></canvas>
             </div>
-            <div class="mt-4 text-right">
-                <button @click="$router.push('/solicitudes')" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                    Ver todas las solicitudes →
-                </button>
+        </div>
+
+        <div class="card p-6">
+            <h3 class="font-black text-lg mb-6 border-b border-border pb-4 uppercase tracking-tighter">
+                Tipos de Acción Solicitada
+            </h3>
+            <div class="relative h-[300px] flex justify-center">
+                <canvas id="chartBar"></canvas>
             </div>
+        </div>
+    </div>
+
+    <!-- Charts Row 2 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div class="card p-6">
+            <h3 class="font-black text-lg mb-6 border-b border-border pb-4 uppercase tracking-tighter text-accent">
+                Top 10 Barrios con más Solicitudes
+            </h3>
+            <div class="relative h-[350px]">
+                <canvas id="chartBarrios"></canvas>
+            </div>
+        </div>
+
+        <div class="card p-6">
+            <h3 class="font-black text-lg mb-6 border-b border-border pb-4 uppercase tracking-tighter text-blue-500">
+                Evolución de Ingresos (Mensual)
+            </h3>
+            <div class="relative h-[350px]">
+                <canvas id="chartEvolucion"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Solicitudes Table -->
+    <div class="card p-8 overflow-hidden">
+        <h3 class="font-black text-lg mb-6 border-b border-border pb-4 uppercase tracking-tighter flex items-center gap-2">
+            <span class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></span>
+            Solicitudes Entrantes (En Espera)
+        </h3>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="text-[10px] font-black uppercase text-muted tracking-widest">
+                        <th class="py-3 px-4 border-b border-border">Código</th>
+                        <th class="py-3 px-4 border-b border-border">Fecha</th>
+                        <th class="py-3 px-4 border-b border-border">Solicitante</th>
+                        <th class="py-3 px-4 border-b border-border">Barrio</th>
+                        <th class="py-3 px-4 border-b border-border">Acción</th>
+                        <th class="py-3 px-4 border-b border-border text-center">Urgencia</th>
+                        <th class="py-3 px-4 border-b border-border text-center">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-if="ultimasSolicitudes.length === 0">
+                        <td colspan="7" class="p-8 text-center text-muted font-bold">No hay registros en espera</td>
+                    </tr>
+                    <tr v-for="(sol, index) in ultimasSolicitudes" :key="index" class="hover:bg-accent/5 transition-colors">
+                        <td class="py-4 px-4 border-b border-border text-sm font-black text-accent">{{ sol.comunicacion_interna || '---' }}</td>
+                        <td class="py-4 px-4 border-b border-border text-xs font-bold">{{ sol.fecha_ingreso }}</td>
+                        <td class="py-4 px-4 border-b border-border text-sm font-bold">{{ sol.solicitante_nombre }}</td>
+                        <td class="py-4 px-4 border-b border-border text-xs font-bold">{{ getBarrioNombre(sol.id_barrio) }}</td>
+                        <td class="py-4 px-4 border-b border-border text-xs font-bold truncate max-w-[150px]">{{ getAccionNombre(sol.id_accion_solicitada) }}</td>
+                        <td class="py-4 px-4 border-b border-border text-center">
+                            <span :class="['px-2 py-0.5 rounded text-[9px] font-black uppercase', 
+                                sol.nivel_urgencia === 'Alta' || sol.es_emergencia ? 'bg-red-500 text-white' : 'bg-blue-500/10 text-blue-500']">
+                                {{ sol.es_emergencia ? 'EMERGENCIA' : sol.nivel_urgencia }}
+                            </span>
+                        </td>
+                        <td class="py-4 px-4 border-b border-border text-center">
+                            <span class="px-3 py-1 rounded-lg text-[10px] font-black uppercase bg-yellow-500/10 text-yellow-500">
+                                {{ sol.estado_tramite }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -196,26 +164,43 @@ const stats = computed(() => {
     }
 })
 
-// Computed para obtener las últimas 5 solicitudes
+// Computed para obtener las últimas 10 solicitudes en espera
 const ultimasSolicitudes = computed(() => {
-    return [...store.solicitudes].reverse().slice(0, 5)
+    return store.solicitudes
+        .filter(s => s.estado_tramite === 'En espera')
+        .reverse()
+        .slice(0, 10)
 })
 
 const getBarrioNombre = (id) => {
-    if (!id) return 'N/A'
-    const b = store.barrios.find(x => x.id === id)
-    return b ? b.nombre : 'Desconocido'
+    if (!id) return '---'
+    const b = store.barrios.find(x => x.id == id)
+    return b ? b.nombre : '---'
+}
+
+const getAccionNombre = (id) => {
+    if (!id) return '---'
+    const a = store.acciones.find(x => x.id == id)
+    return a ? a.nombre.split('–')[0].split('-')[0].trim() : '---'
 }
 
 // --- GRÁFICOS CON CHART.JS ---
 let chartPieInstance = null;
 let chartBarInstance = null;
+let chartBarriosInstance = null;
+let chartEvolucionInstance = null;
 
 const generarDatosGraficos = () => {
     // 1. Solicitudes por Distrito
     const countPorDistrito = {};
     // 2. Solicitudes por Acción Solicitada
     const countPorAccion = {};
+    // 3. Solicitudes por Barrio (Top 10)
+    const countPorBarrio = {};
+    // 4. Evolución Mensual
+    const countPorMes = {};
+
+    const mesesNombres = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
     store.solicitudes.forEach(s => {
         // Distrito
@@ -224,6 +209,9 @@ const generarDatosGraficos = () => {
             if (barrio) {
                 const distId = barrio.id_distrito;
                 countPorDistrito[distId] = (countPorDistrito[distId] || 0) + 1;
+                
+                // Barrios
+                countPorBarrio[barrio.nombre] = (countPorBarrio[barrio.nombre] || 0) + 1;
             }
         }
         // Acciones
@@ -234,78 +222,123 @@ const generarDatosGraficos = () => {
                 countPorAccion[nombreCorto] = (countPorAccion[nombreCorto] || 0) + 1;
             }
         }
+        // Evolución (Fecha de Ingreso)
+        if (s.fecha_ingreso) {
+            const fecha = new Date(s.fecha_ingreso);
+            const mesAnio = `${mesesNombres[fecha.getMonth()]} ${fecha.getFullYear()}`;
+            countPorMes[mesAnio] = (countPorMes[mesAnio] || 0) + 1;
+        }
     });
 
-    const etiquetasDistrito = Object.keys(countPorDistrito).map(id => `Distrito ${id}`);
-    const valoresDistrito = Object.values(countPorDistrito);
+    // Ordenar y limitar Barrios
+    const topBarrios = Object.entries(countPorBarrio)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
 
-    const etiquetasAccion = Object.keys(countPorAccion);
-    const valoresAccion = Object.values(countPorAccion);
+    // Ordenar Meses (Simplificado: asume orden cronológico por inserción o requiere sorting real)
+    const etiquetasMes = Object.keys(countPorMes);
+    const valoresMes = Object.values(countPorMes);
 
     return {
-        distritos: { labels: etiquetasDistrito, data: valoresDistrito },
-        acciones: { labels: etiquetasAccion, data: valoresAccion }
+        distritos: { 
+            labels: Object.keys(countPorDistrito).map(id => `Distrito ${id}`), 
+            data: Object.values(countPorDistrito) 
+        },
+        acciones: { 
+            labels: Object.keys(countPorAccion), 
+            data: Object.values(countPorAccion) 
+        },
+        barrios: { 
+            labels: topBarrios.map(b => b[0]), 
+            data: topBarrios.map(b => b[1]) 
+        },
+        evolucion: { 
+            labels: etiquetasMes, 
+            data: valoresMes 
+        }
     }
 }
 
 const renderCharts = () => {
-    if (!window.Chart) return; // Por si el CDN falla
+    if (!window.Chart) return;
 
     const datos = generarDatosGraficos();
 
-    // Destruir gráficos anteriores si existen para redibujarlos limpios
-    if (chartPieInstance) chartPieInstance.destroy();
-    if (chartBarInstance) chartBarInstance.destroy();
+    // Destruir instancias previas
+    [chartPieInstance, chartBarInstance, chartBarriosInstance, chartEvolucionInstance].forEach(c => c?.destroy());
 
-    // Gráfico de Pastel (Distritos)
-    const ctxPie = document.getElementById('chartPie');
-    if (ctxPie) {
-        chartPieInstance = new window.Chart(ctxPie, {
-            type: 'doughnut',
-            data: {
-                labels: datos.distritos.labels.length > 0 ? datos.distritos.labels : ['Sin datos'],
-                datasets: [{
-                    data: datos.distritos.data.length > 0 ? datos.distritos.data : [1],
-                    backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom' }
-                }
-            }
-        });
-    }
+    // 1. Pastel (Distritos)
+    chartPieInstance = new window.Chart(document.getElementById('chartPie'), {
+        type: 'doughnut',
+        data: {
+            labels: datos.distritos.labels.length > 0 ? datos.distritos.labels : ['Sin datos'],
+            datasets: [{
+                data: datos.distritos.data.length > 0 ? datos.distritos.data : [1],
+                backgroundColor: ['#6A8E40', '#3b82f6', '#8b5cf6', '#ef4444', '#f59e0b', '#06b6d4'],
+                borderWidth: 0
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+    });
 
-    // Gráfico de Barras (Acciones)
-    const ctxBar = document.getElementById('chartBar');
-    if (ctxBar) {
-        chartBarInstance = new window.Chart(ctxBar, {
-            type: 'bar',
-            data: {
-                labels: datos.acciones.labels.length > 0 ? datos.acciones.labels : ['Sin datos'],
-                datasets: [{
-                    label: 'Cantidad',
-                    data: datos.acciones.data.length > 0 ? datos.acciones.data : [0],
-                    backgroundColor: '#3b82f6',
-                    borderRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
-                }
-            }
-        });
-    }
+    // 2. Barras (Acciones)
+    chartBarInstance = new window.Chart(document.getElementById('chartBar'), {
+        type: 'bar',
+        data: {
+            labels: datos.acciones.labels.length > 0 ? datos.acciones.labels : ['Sin datos'],
+            datasets: [{
+                label: 'Solicitudes',
+                data: datos.acciones.data.length > 0 ? datos.acciones.data : [0],
+                backgroundColor: '#3b82f6',
+                borderRadius: 8
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+    });
+
+    // 3. Barrios (Horizontal)
+    chartBarriosInstance = new window.Chart(document.getElementById('chartBarrios'), {
+        type: 'bar',
+        data: {
+            labels: datos.barrios.labels.length > 0 ? datos.barrios.labels : ['Sin datos'],
+            datasets: [{
+                label: 'Solicitudes',
+                data: datos.barrios.data.length > 0 ? datos.barrios.data : [0],
+                backgroundColor: '#6A8E40',
+                borderRadius: 5
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // 4. Evolución (Línea)
+    chartEvolucionInstance = new window.Chart(document.getElementById('chartEvolucion'), {
+        type: 'line',
+        data: {
+            labels: datos.evolucion.labels.length > 0 ? datos.evolucion.labels : ['Sin datos'],
+            datasets: [{
+                label: 'Ingresos',
+                data: datos.evolucion.data.length > 0 ? datos.evolucion.data : [0],
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 5,
+                pointHoverRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
 }
 
 onMounted(() => {

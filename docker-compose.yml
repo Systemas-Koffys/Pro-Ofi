@@ -1,24 +1,26 @@
 version: '3.8'
+
 services:
-  app:
-    build: .
-    image: proyecto-oficina
-    ports:
-      - "8080:5173"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    environment:
-      - DB_HOST=db
-      - DB_USER=root
-      - DB_PASSWORD=password
-      - DB_NAME=dboficina
-    depends_on:
-      - db
   db:
     image: mysql:latest
+    container_name: db_oficina
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=dboficina
     ports:
       - "3306:3306"
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: pma_oficina
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=password
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
