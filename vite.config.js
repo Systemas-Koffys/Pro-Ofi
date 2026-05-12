@@ -9,7 +9,7 @@ export default defineConfig({
     allowedHosts: true, // <--- Esta es la línea que soluciona el bloqueo
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:5173',
         changeOrigin: true,
       }
     }
